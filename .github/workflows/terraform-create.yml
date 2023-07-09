@@ -1,9 +1,7 @@
-name: 'Terraform'
+name: 'Create Aks Cluster'
 
 on:
-  push:
-    branches:
-    - main
+    workflow_dispatch:
 
 jobs:
   terraform:
