@@ -20,7 +20,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   tags = {
-    Environment = "Develop"
-    
+    Environment = var.environment
   }
+
+  private_cluster_enabled = var.private_cluster_enabled
 }
