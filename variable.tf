@@ -2,6 +2,6 @@ variable "environment" {
   type = string
 }
 
-variable "private_cluster_enabled " {
+variable "private_cluster_enabled" {
   type = string
 }
