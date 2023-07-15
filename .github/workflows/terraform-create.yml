@@ -39,5 +39,5 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
-        TF_VAR_environment: ${{ env.environment }}
-        TF_VAR_azurerm_kubernetes_cluster: ${{ env.PRIVATE_CLUSTER_ENABLED  }}
+        TF_VAR_environment: ${{ env.ENVIRONMENT }}
+        TF_VAR_azurerm_kubernetes_cluster: ${{ env.PRIVATE_CLUSTER_ENABLED }}
