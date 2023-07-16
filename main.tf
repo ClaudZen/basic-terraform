@@ -8,6 +8,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "core"
+  private_cluster_enabled = false
 
   default_node_pool {
     name       = "corepool"
@@ -22,6 +23,4 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   tags = {
     Environment = var.environment
   }
-
-  private_cluster_enabled = var.private_cluster_enabled
 }
