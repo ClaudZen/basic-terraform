@@ -40,6 +40,13 @@ jobs:
 
     - name: Terraform Plan Destroy
       run: terraform plan -destroy
+      env:
+        TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+        TF_VAR_rg_name_cluster: ${{ vars.RG_NAME_CLUSTER }}
+        TF_VAR_cluster_name: ${{ vars.CLUSTER_NAME }}
+        TF_VAR_vm_replicas: ${{ vars.VM_REPLICAS }}
+        TF_VAR_vm_size: ${{ vars.VM_SIZE }}
+        TF_VAR_private_cluster: ${{ vars.PRIVATE_CLUSTER }}
 
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
