@@ -32,7 +32,6 @@ jobs:
           -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
           -backend-config="key=terraform.tfstate"
 
-
     - name: Terraform Plan
       run: terraform plan
 
