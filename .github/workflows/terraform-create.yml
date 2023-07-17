@@ -35,7 +35,9 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan
+
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
         TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+        TF_VAR_private_cluster: ${{ vars.PRIVATE_CLUSTER }}
