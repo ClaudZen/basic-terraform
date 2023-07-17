@@ -1,19 +1,18 @@
-resource "azurerm_resource_group" "rg" {
-  name     = "ic"
-  location = "brazilsouth"
+data "azurerm_resource_group" "rg" {
+  name = var.rg_name_cluster
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
-  name                = "core"
+  name                = var.cluster_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "core"
+  dns_prefix          = var.cluster_name
   private_cluster_enabled = var.private_cluster
 
   default_node_pool {
-    name       = "corepool"
-    node_count = 1
-    vm_size    = "Standard_B2s"
+    name       = "npaks"
+    node_count = var.vm_replicas
+    vm_size    = var.vm_size
   }
 
   identity {

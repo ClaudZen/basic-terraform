@@ -2,17 +2,24 @@ name: 'Destroy AKS Cluster'
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente de GitHub Actions'
+        required: true
 
 jobs:
   destroy:
+    name: 'Terraform'
     runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.environment }}
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
 
     - name: Azure Login
       uses: azure/login@v1

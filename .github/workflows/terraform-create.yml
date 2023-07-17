@@ -2,18 +2,24 @@ name: 'Create Aks Cluster'
 
 on:
     workflow_dispatch:
+      inputs:
+        environment:
+          description: 'Ambiente de GitHub Actions'
+          required: true
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.environment }}
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
 
     - name: Azure Login
       uses: azure/login@v1
@@ -30,16 +36,24 @@ jobs:
           terraform init -backend-config="resource_group_name=${{ secrets.RESOURCE_GROUP_NAME }}" \
           -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
           -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
-          -backend-config="key=terraform.tfstate"
+          -backend-config="key=${{ vars.NAME_TFSTATE }}"
 
     - name: Terraform Plan
       run: terraform plan
       env:
         TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+        TF_VAR_rg_name_cluster: ${{ vars.RG_NAME_CLUSTER }}
+        TF_VAR_cluster_name: ${{ vars.CLUSTER_NAME }}
+        TF_VAR_vm_replicas: ${{ vars.VM_REPLICAS }}
+        TF_VAR_vm_size: ${{ vars.VM_SIZE }}
         TF_VAR_private_cluster: ${{ vars.PRIVATE_CLUSTER }}
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
         TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+        TF_VAR_rg_name_cluster: ${{ vars.RG_NAME_CLUSTER }}
+        TF_VAR_cluster_name: ${{ vars.CLUSTER_NAME }}
+        TF_VAR_vm_replicas: ${{ vars.VM_REPLICAS }}
+        TF_VAR_vm_size: ${{ vars.VM_SIZE }}
         TF_VAR_private_cluster: ${{ vars.PRIVATE_CLUSTER }}
